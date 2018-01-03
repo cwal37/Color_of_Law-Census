@@ -92,6 +92,7 @@ df3['sign_diff'] = np.sign(df3['b_pct_c']) + np.sign(df3['w_pct_c'])
 df3['total_all'] = df3['wp']+df3['bp']+df3['op']
 
 df3['bpt'] = df3['bp'] + (-1*df3['bc'])
+df3.to_csv('modified_results.csv')
 
 dfBC = df3[df3['total_all'] > 50000]
 dfBC = dfBC[dfBC['bpt'] > 200]
