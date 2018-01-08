@@ -20,7 +20,7 @@ stNs = list(countyMapping['State Code (FIPS)'].values)
 countyNs = list(countyMapping['County Code (FIPS)'].values)
 
 countyMapping['census_code'] = [state+'-'+str(stateN)+'-'+str(stateN)+str(countyN) for state, stateN, countyN in zip(stAbbvs, stNs, countyNs)]
-
+countyMapping.to_csv('countiesIDMapped.csv')
 dirtyFuels = ['DFO', 'SUB', 'JF', 'BIT', 'LIG', 'RFO', 'OBS', 'KER', 'BFG', 'BLQ']
 
 dirtyGen = powerData[powerData['Energy Source 1'].isin(dirtyFuels)]

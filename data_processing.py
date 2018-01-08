@@ -92,8 +92,36 @@ df3['sign_diff'] = np.sign(df3['b_pct_c']) + np.sign(df3['w_pct_c'])
 df3['total_all'] = df3['wp']+df3['bp']+df3['op']
 
 df3['bpt'] = df3['bp'] + (-1*df3['bc'])
+df3['b_pct_pop'] = df3['bp']/df3['total_all']
+
+
 df3.to_csv('modified_results.csv')
 
+
+uCounties = list(set(df3['County'].values))
+
+changeResults = []
+for county in uCounties:
+    print(county)
+    dfCounty = df3[df3['County'] == county]
+    dfCounty = dfCounty.sort_values('Year', ascending = True)
+    startPct = dfCounty['b_pct_pop'].values[0] 
+    endPct = dfCounty['b_pct_pop'].values[len(dfCounty)-1]
+    changePct = endPct-startPct
+    changeResults.append([county, startPct, endPct, changePct])
+    
+    
+dfChange = pd.DataFrame(changeResults, columns = ['County', 'Start Pct',
+                                                  'End Pct', 'Diff Pct'])
+
+dfChange.to_csv('change_results.csv')
+    
+
+"""
+for county in counties look at pct of pop in min and max years then get the counties:
+    with the largest absolute pct change in pct of pop, then look and see if those have any inflection points,
+    since really I'm looking for counties that changed a lot
+"""
 dfBC = df3[df3['total_all'] > 50000]
 dfBC = dfBC[dfBC['bpt'] > 200]
 
